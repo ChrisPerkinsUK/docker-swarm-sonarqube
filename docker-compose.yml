@@ -1,0 +1,60 @@
+version: "3.3"
+
+services:
+  sonarqube:
+    image: chrisperkins/sonarqube:lts
+    env_file:
+      - ./envars/sonar.env
+    ports:
+      - "9000:9000"
+    networks:
+      - sonarnet
+    volumes:
+      - type: volume
+        source: sonarqube_conf
+        target: /opt/sonarqube/conf
+
+      - type: volume
+        source: sonarqube_data
+        target: /opt/sonarqube/data
+
+      - type: volume
+        source: sonarqube_extensions
+        target: /opt/sonarqube/extensions
+
+      - type: volume
+        source: sonarqube_bundled-plugins
+        target: /opt/sonarqube/lib/bundled-plugins
+
+      - type: volume
+        source: sonarqube_plugins
+        target: /opt/sonarqube/lib/plugins
+
+  db:
+    image: postgres:10.5-alpine
+    env_file:
+      - ./envars/sonar-postgres.env
+    networks:
+      - sonarnet
+    volumes:
+      - type: volume
+        source: postgresql
+        target: /var/lib/postgresql
+      # This needs explicit mapping due to
+      # https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+      - type: volume
+        source: postgresql_data
+        target: /var/lib/postgresql/data
+
+networks:
+  sonarnet:
+    driver: overlay
+
+volumes:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:
+  sonarqube_plugins:
+  postgresql:
+  postgresql_data:

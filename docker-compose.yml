@@ -19,6 +19,10 @@ services:
         target: /opt/sonarqube/data
 
       - type: volume
+        source: sonarqube_logs
+        target: /opt/sonarqube/logs
+
+      - type: volume
         source: sonarqube_extensions
         target: /opt/sonarqube/extensions
 

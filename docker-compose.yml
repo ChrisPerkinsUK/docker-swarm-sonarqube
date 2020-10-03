@@ -26,14 +26,6 @@ services:
         source: sonarqube_extensions
         target: /opt/sonarqube/extensions
 
-      - type: volume
-        source: sonarqube_bundled-plugins
-        target: /opt/sonarqube/lib/bundled-plugins
-
-      - type: volume
-        source: sonarqube_plugins
-        target: /opt/sonarqube/lib/plugins
-
   db:
     image: postgres:10.5-alpine
     env_file:

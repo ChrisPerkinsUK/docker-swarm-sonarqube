@@ -49,6 +49,7 @@ networks:
 volumes:
   sonarqube_conf:
   sonarqube_data:
+  sonarqube_logs:
   sonarqube_extensions:
   sonarqube_bundled-plugins:
   sonarqube_plugins:
